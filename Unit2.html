@@ -121,225 +121,198 @@
             { question: "Publication of obscene material in electronic form carries punishment of:", options: ["Up to 1 year imprisonment", "Imprisonment up to 5 years and/or fine up to NPR 100,000", "Only NPR 5,000 fine", "No punishment"], answer: 1 },
             { question: "Which recent law in Nepal mandates Security Operation Centers for telecom providers?", options: ["Electronic Transactions Act 2063", "Cyber Security Bye-Law 2077 (2020)", "Individual Privacy Act 2018 only", "None"], answer: 1 }
         ];
+let questions=[];
+let currentQuestionIndex=0;
+let selectedAnswers=[];
 
-        let questions = [];
-        let currentQuestionIndex = 0;
-        let selectedAnswers = [];
+function shuffleArray(array){
+const arr=[...array];
+for(let i=arr.length-1;i>0;i--){
+const j=Math.floor(Math.random()*(i+1));
+[arr[i],arr[j]]=[arr[j],arr[i]];
+}
+return arr;
+}
 
-        function shuffleArray(array) {
-            const arr = [...array];
-            for (let i = arr.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [arr[i], arr[j]] = [arr[j], arr[i]];
-            }
-            return arr;
-        }
+function prepareShuffledQuestions() {
+    questions = originalQuestions.map(q => {
+        const shuffledOptions = shuffleArray(q.options);
+        const correctAnswer = q.options[q.answer];
+        const newAnswerIndex = shuffledOptions.indexOf(correctAnswer);
 
-        function prepareShuffledQuestions() {
-            questions = originalQuestions.map(q => {
-                const shuffledOptions = shuffleArray(q.options);
-                const originalCorrect = q.options[q.answer];
-                const newAnswerIndex = shuffledOptions.indexOf(originalCorrect);
-                return { question: q.question, options: shuffledOptions, answer: newAnswerIndex };
-            });
-            selectedAnswers = new Array(questions.length).fill(null);
-        }
+        return {
+            question: q.question,
+            options: shuffledOptions,
+            answer: newAnswerIndex
+        };
+    });
 
-        function renderQuestion() {
-            const q = questions[currentQuestionIndex];
-            document.getElementById('progress').style.width = `${((currentQuestionIndex + 1) / questions.length) * 100}%`;
-            document.getElementById('question-counter').textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
-            document.getElementById('question-text').textContent = q.question;
-            renderOptions();
-            updateNavigationButtons();
-        }
+    selectedAnswers = new Array(questions.length).fill(null);
+}
 
-        function renderOptions() {
-            const container = document.getElementById('options');
-            container.innerHTML = '';
-            const q = questions[currentQuestionIndex];
-            const selected = selectedAnswers[currentQuestionIndex];
-            const isLocked = selected !== null;
-            const correctIdx = q.answer;
+function renderQuestion(){
+const q=questions[currentQuestionIndex]
 
-            q.options.forEach((option, idx) => {
-                const btn = document.createElement('button');
-                let btnClass = `option w-full text-left px-6 py-5 sm:py-6 rounded-3xl border-2 text-base sm:text-lg font-medium flex items-center gap-5 group`;
-                let extraHTML = '';
+document.getElementById('progress').style.width=`${((currentQuestionIndex+1)/questions.length)*100}%`
+document.getElementById('question-counter').textContent=`Question ${currentQuestionIndex+1} of ${questions.length}`
+document.getElementById('question-text').textContent=q.question
 
-                if (isLocked) {
-                    btn.disabled = true;
-                    if (idx === correctIdx) {
-                        btnClass += ' border-emerald-400 bg-emerald-50 text-emerald-900';
-                        extraHTML = `<span class="ml-auto text-3xl text-emerald-500">✓</span>`;
-                    } else if (idx === selected) {
-                        btnClass += ' border-rose-400 bg-rose-50 text-rose-900';
-                        extraHTML = `<span class="ml-auto text-3xl text-rose-500">✕</span>`;
-                    } else {
-                        btnClass += ' border-gray-200 bg-white/70 opacity-80';
-                    }
-                } else {
-                    btnClass += ' border-gray-200 hover:border-red-300 hover:bg-red-50';
-                    if (idx === selected) btnClass += ' border-red-400 bg-red-50';
-                }
+renderOptions()
+updateNavigationButtons()
+}
 
-                btn.className = btnClass;
-                btn.innerHTML = `
-                    <span class="w-9 h-9 flex-shrink-0 rounded-2xl border flex items-center justify-center text-base font-bold">${String.fromCharCode(65 + idx)}</span>
-                    <span class="flex-1">${option}</span>
-                    ${extraHTML}
-                `;
-                if (!isLocked) btn.onclick = () => selectOption(idx);
-                container.appendChild(btn);
-            });
+function renderOptions(){
+const container=document.getElementById('options')
+container.innerHTML=''
 
-            const statusEl = document.getElementById('status');
-            statusEl.textContent = isLocked ? 'Answered' : 'Unanswered';
-            statusEl.parentElement.classList.toggle('bg-emerald-100', isLocked);
-            statusEl.parentElement.classList.toggle('text-emerald-700', isLocked);
-        }
+const q=questions[currentQuestionIndex]
+const selected=selectedAnswers[currentQuestionIndex]
+const isLocked=selected!==null
+const correctIdx=q.answer
 
-        function selectOption(index) {
-            if (selectedAnswers[currentQuestionIndex] !== null) return;
-            selectedAnswers[currentQuestionIndex] = index;
-            renderOptions();
-            updateNavigationButtons();
-        }
+q.options.forEach((option,idx)=>{
 
-        function updateNavigationButtons() {
-            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
-            const nextBtn = document.getElementById('next-btn');
-            nextBtn.innerHTML = currentQuestionIndex === questions.length - 1 
-                ? `Finish Quiz <span class="text-2xl">🏁</span>` 
-                : `Next Question <span class="text-2xl">→</span>`;
-        }
+const btn=document.createElement('button')
+let btnClass=`option w-full text-left px-6 py-5 sm:py-6 rounded-3xl border-2 text-base sm:text-lg font-medium flex items-center gap-5 group`
+let extraHTML=''
 
-        function nextQuestion() {
-            if (currentQuestionIndex < questions.length - 1) {
-                currentQuestionIndex++;
-                renderQuestion();
-            } else {
-                showResults();
-            }
-        }
+if(isLocked){
+btn.disabled=true
 
-        function previousQuestion() {
-            if (currentQuestionIndex > 0) {
-                currentQuestionIndex--;
-                renderQuestion();
-            }
-        }
+if(idx===correctIdx){
+btnClass+=' border-emerald-400 bg-emerald-50 text-emerald-900'
+extraHTML=`<span class="ml-auto text-3xl text-emerald-500">✓</span>`
+}
+else if(idx===selected){
+btnClass+=' border-rose-400 bg-rose-50 text-rose-900'
+extraHTML=`<span class="ml-auto text-3xl text-rose-500">✕</span>`
+}
+else{
+btnClass+=' border-gray-200 bg-white/70 opacity-80'
+}
 
-        function calculateResults() {
-            let correct = 0, incorrect = 0, skipped = 0;
-            selectedAnswers.forEach((selected, i) => {
-                if (selected === null) skipped++;
-                else if (selected === questions[i].answer) correct++;
-                else incorrect++;
-            });
-            return { correct, incorrect, skipped, total: questions.length };
-        }
+}else{
+btnClass+=' border-gray-200 hover:border-violet-300 hover:bg-violet-50'
+}
 
-        function showResults() {
-            const { correct, incorrect, skipped, total } = calculateResults();
-            const percentage = Math.round((correct / total) * 100);
-            const attempted = correct + incorrect;
-            const accuracyAttempted = attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
+btn.className=btnClass
 
-            document.getElementById('quiz-card').classList.add('hidden');
-            document.getElementById('results-screen').classList.remove('hidden');
+btn.innerHTML=`
+<span class="w-9 h-9 flex-shrink-0 rounded-2xl border flex items-center justify-center text-base font-bold">${String.fromCharCode(65+idx)}</span>
+<span class="flex-1">${option}</span>
+${extraHTML}
+`
 
-            document.getElementById('score').textContent = `${correct}/${total}`;
-            document.getElementById('percentage').textContent = `${percentage}%`;
-            document.getElementById('correct-count').textContent = correct;
-            document.getElementById('incorrect-count').textContent = incorrect;
-            document.getElementById('skipped-count').textContent = skipped;
+if(!isLocked){
+btn.onclick=()=>selectOption(idx)
+}
 
-            const trophyEl = document.getElementById('trophy');
-            trophyEl.textContent = percentage >= 85 ? '🏆' : percentage >= 65 ? '🔥' : percentage >= 40 ? '👍' : '📚';
+container.appendChild(btn)
 
-            let insightsHTML = `You scored <strong>${correct}</strong> out of <strong>${total}</strong> (${percentage}% overall).<br><br>${attempted > 0 ? `Accuracy on attempted questions: <strong>${accuracyAttempted}%</strong>.<br><br>` : ''}${skipped > 0 ? `💡 You skipped <strong>${skipped}</strong> questions. Attempting them could have boosted your score significantly!` : `🌟 Outstanding! You attempted every question.`}`;
-            document.getElementById('insights').innerHTML = insightsHTML;
-        }
+})
 
-        function restartQuiz() {
-            prepareShuffledQuestions();
-            currentQuestionIndex = 0;
-            document.getElementById('quiz-card').classList.remove('hidden');
-            document.getElementById('results-screen').classList.add('hidden');
-            document.getElementById('review-modal').classList.add('hidden');
-            renderQuestion();
-        }
+const statusEl=document.getElementById('status')
+statusEl.textContent=isLocked?'Answered':'Unanswered'
+statusEl.parentElement.classList.toggle('bg-emerald-100',isLocked)
+statusEl.parentElement.classList.toggle('text-emerald-700',isLocked)
+}
 
-        function shareResults() {
-            const { correct, incorrect, skipped, total } = calculateResults();
-            const percentage = Math.round((correct / total) * 100);
-            const text = `🛡️ Quizzy Pro Result (Unit 2 Cybersecurity)\nI scored ${correct}/${total} (${percentage}%) — ${correct} correct, ${incorrect} wrong, ${skipped} skipped!\n\nBeat my score? Download the HTML file and play instantly!`;
-            navigator.clipboard.writeText(text).then(() => {
-                const btn = event.currentTarget;
-                const orig = btn.textContent;
-                btn.textContent = '✅ Report Copied!';
-                setTimeout(() => btn.textContent = orig, 2000);
-            });
-        }
+function selectOption(index){
+if(selectedAnswers[currentQuestionIndex]!==null)return
+selectedAnswers[currentQuestionIndex]=index
+renderOptions()
+}
 
-        function showAnswers() {
-            const modal = document.getElementById('review-modal');
-            const content = document.getElementById('review-content');
-            content.innerHTML = '';
-            questions.forEach((q, i) => {
-                const selected = selectedAnswers[i];
-                const isCorrect = selected === q.answer;
-                let statusHTML = '';
-                if (selected === null) {
-                    statusHTML = `<div class="flex items-center gap-3 text-amber-600"><span class="text-3xl">⏭️</span><span class="font-semibold">Skipped</span></div>`;
-                } else if (isCorrect) {
-                    statusHTML = `<div class="flex items-center gap-3 text-emerald-600"><span class="text-3xl">✅</span><span class="font-semibold">Correct</span></div>`;
-                } else {
-                    statusHTML = `<div class="flex items-center gap-3 text-rose-600"><span class="text-3xl">❌</span><span class="font-semibold">Incorrect</span></div>`;
-                }
-                const div = document.createElement('div');
-                div.className = `border rounded-3xl p-7 ${selected === null ? 'border-amber-200 bg-amber-50' : isCorrect ? 'border-emerald-200 bg-emerald-50' : 'border-rose-200 bg-rose-50'}`;
-                div.innerHTML = `${statusHTML}<p class="font-medium mt-5 text-lg leading-tight">${q.question}</p><div class="grid grid-cols-1 gap-3 mt-7">${q.options.map((opt, idx) => { let optClass = 'px-6 py-4 rounded-2xl border text-base flex justify-between items-center'; if (idx === q.answer) optClass += ' border-emerald-400 bg-emerald-100 text-emerald-800'; else if (selected !== null && idx === selected) optClass += ' border-rose-400 bg-rose-100 text-rose-800 line-through'; else optClass += ' border-gray-200 bg-white'; return `<div class="${optClass}"><span>${String.fromCharCode(65 + idx)}. ${opt}</span>${idx === q.answer ? '<span class="text-emerald-600 text-xl">✓</span>' : ''}</div>`; }).join('')}</div>`;
-                content.appendChild(div);
-            });
-            modal.classList.remove('hidden');
-        }
+function updateNavigationButtons(){
+document.getElementById('prev-btn').disabled=currentQuestionIndex===0
 
-        function hideReview() {
-            document.getElementById('review-modal').classList.add('hidden');
-        }
+const nextBtn=document.getElementById('next-btn')
 
-        function handleKeyboard(e) {
-            if (document.getElementById('quiz-card').classList.contains('hidden')) return;
-            if (e.key === 'ArrowRight') nextQuestion();
-            if (e.key === 'ArrowLeft') previousQuestion();
-            if (e.key >= '1' && e.key <= '4') {
-                const idx = parseInt(e.key) - 1;
-                if (idx < questions[currentQuestionIndex].options.length && selectedAnswers[currentQuestionIndex] === null) {
-                    selectOption(idx);
-                }
-            }
-        }
+nextBtn.innerHTML=currentQuestionIndex===questions.length-1?
+`Finish Quiz <span class="text-2xl">🏁</span>`:
+`Next Question <span class="text-2xl">→</span>`
+}
 
-        function prepareShuffledQuestions() {
-            questions = originalQuestions.map(q => {
-                const shuffledOptions = shuffleArray(q.options);
-                const originalCorrect = q.options[q.answer];
-                const newAnswerIndex = shuffledOptions.indexOf(originalCorrect);
-                return { question: q.question, options: shuffledOptions, answer: newAnswerIndex };
-            });
-            selectedAnswers = new Array(questions.length).fill(null);
-        }
+function nextQuestion(){
+if(currentQuestionIndex<questions.length-1){
+currentQuestionIndex++
+renderQuestion()
+}else{
+showResults()
+}
+}
 
-        function startQuiz() {
-            prepareShuffledQuestions();
-            currentQuestionIndex = 0;
-            renderQuestion();
-            document.addEventListener('keydown', handleKeyboard);
-        }
+function previousQuestion(){
+if(currentQuestionIndex>0){
+currentQuestionIndex--
+renderQuestion()
+}
+}
 
-        window.onload = startQuiz;
-    </script>
+function calculateResults(){
+let correct=0,incorrect=0,skipped=0
+
+selectedAnswers.forEach((selected,i)=>{
+if(selected===null)skipped++
+else if(selected===questions[i].answer)correct++
+else incorrect++
+})
+
+return{correct,incorrect,skipped,total:questions.length}
+}
+
+function showResults(){
+
+const{correct,incorrect,skipped,total}=calculateResults()
+
+const percentage=Math.round((correct/total)*100)
+const attempted=correct+incorrect
+const accuracyAttempted=attempted>0?Math.round((correct/attempted)*100):0
+
+document.getElementById('quiz-card').classList.add('hidden')
+document.getElementById('results-screen').classList.remove('hidden')
+
+document.getElementById('score').textContent=`${correct}/${total}`
+document.getElementById('percentage').textContent=`${percentage}%`
+document.getElementById('correct-count').textContent=correct
+document.getElementById('incorrect-count').textContent=incorrect
+document.getElementById('skipped-count').textContent=skipped
+
+const trophyEl=document.getElementById('trophy')
+
+trophyEl.textContent=
+percentage>=85?'🏆':
+percentage>=65?'🔥':
+percentage>=40?'👍':'📚'
+
+let insightsHTML=`
+You scored <strong>${correct}</strong> out of <strong>${total}</strong> (${percentage}% overall).<br><br>
+${attempted>0?`Accuracy on attempted questions: <strong>${accuracyAttempted}%</strong>.<br><br>`:''}
+${skipped>0?
+`💡 You skipped <strong>${skipped}</strong> questions.`:
+`🌟 Outstanding! You attempted every question.`}
+`
+
+document.getElementById('insights').innerHTML=insightsHTML
+}
+
+function restartQuiz(){
+prepareShuffledQuestions()
+currentQuestionIndex=0
+document.getElementById('quiz-card').classList.remove('hidden')
+document.getElementById('results-screen').classList.add('hidden')
+renderQuestion()
+}
+
+function startQuiz(){
+prepareShuffledQuestions()
+currentQuestionIndex=0
+renderQuestion()
+}
+
+window.onload=startQuiz
+
+</script>
+
 </body>
 </html>
