@@ -7,37 +7,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        .option {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .option:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 25px -5px rgb(0 0 0 / 0.1);
-        }
-        
-        .option:disabled {
-            cursor: not-allowed;
-        }
-        
-        .progress-bar {
-            transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        
-        .quiz-container {
-            animation: fadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
-        
-        @keyframes fadeInScale {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
+        body { font-family: 'Poppins', sans-serif; }
+        .option { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .option:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 15px 25px -5px rgb(0 0 0 / 0.1); }
+        .option:disabled { cursor: not-allowed; }
+        .progress-bar { transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .quiz-container { animation: fadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        @keyframes fadeInScale { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         @media (max-width: 640px) {
             .option { padding: 1.25rem 1rem; font-size: 1rem; }
             h2 { font-size: 1.35rem; line-height: 1.3; }
@@ -46,7 +22,6 @@
 </head>
 <body class="bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-600 min-h-screen flex items-center justify-center p-4">
     <div class="max-w-2xl w-full mx-auto">
-        <!-- Header -->
         <div class="flex items-center justify-between mb-8 text-white">
             <div class="flex items-center gap-3">
                 <div class="w-11 h-11 bg-white/20 backdrop-blur-xl rounded-3xl flex items-center justify-center text-4xl shadow-inner">📜</div>
@@ -55,111 +30,58 @@
                     <p class="text-white/70 text-sm -mt-1">Unit 4 • Intellectual Property • 30 MCQs</p>
                 </div>
             </div>
-            <button onclick="restartQuiz()" 
-                    class="bg-white/10 hover:bg-white/20 backdrop-blur-md px-6 py-3 rounded-3xl text-sm font-semibold flex items-center gap-2 transition-all active:scale-95">
-                🔄 Restart
-            </button>
+            <button onclick="restartQuiz()" class="bg-white/10 hover:bg-white/20 backdrop-blur-md px-6 py-3 rounded-3xl text-sm font-semibold flex items-center gap-2 transition-all active:scale-95">🔄 Restart</button>
         </div>
 
-        <!-- Main Quiz Card -->
         <div id="quiz-card" class="quiz-container bg-white rounded-3xl shadow-2xl overflow-hidden">
             <div class="h-2 bg-gray-100">
                 <div id="progress" class="progress-bar h-full bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 w-1/30"></div>
             </div>
-
             <div class="p-6 sm:p-8">
                 <div class="flex justify-between items-center mb-6">
                     <div id="question-counter" class="text-sm font-semibold text-gray-500">Question 1 of 30</div>
-                    <div class="text-xs font-mono bg-amber-100 text-amber-700 px-5 py-1.5 rounded-3xl flex items-center gap-1">
-                        <span>📌</span> 
-                        <span id="status">Unanswered</span>
-                    </div>
+                    <div class="text-xs font-mono bg-amber-100 text-amber-700 px-5 py-1.5 rounded-3xl flex items-center gap-1"><span>📌</span><span id="status">Unanswered</span></div>
                 </div>
-
                 <h2 id="question-text" class="text-xl sm:text-2xl font-semibold text-gray-900 leading-tight mb-10 min-h-[88px]"></h2>
-
                 <div id="options" class="space-y-3 sm:space-y-4 mb-10"></div>
-
                 <div class="flex items-center justify-between">
-                    <button onclick="previousQuestion()" 
-                            id="prev-btn"
-                            class="px-6 sm:px-8 py-3.5 text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center gap-2 disabled:opacity-40 transition-all">
-                        ← Previous
-                    </button>
-                    
-                    <button onclick="nextQuestion()" 
-                            id="next-btn"
-                            class="px-8 sm:px-12 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold rounded-3xl flex items-center gap-3 shadow-xl shadow-emerald-500/40 hover:shadow-2xl transition-all">
-                        <span id="next-text">Next Question</span>
-                        <span class="text-2xl">→</span>
-                    </button>
+                    <button onclick="previousQuestion()" id="prev-btn" class="px-6 sm:px-8 py-3.5 text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center gap-2 disabled:opacity-40 transition-all">← Previous</button>
+                    <button onclick="nextQuestion()" id="next-btn" class="px-8 sm:px-12 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold rounded-3xl flex items-center gap-3 shadow-xl shadow-emerald-500/40 hover:shadow-2xl transition-all"><span id="next-text">Next Question</span><span class="text-2xl">→</span></button>
                 </div>
             </div>
         </div>
 
-        <!-- Results Screen -->
         <div id="results-screen" class="hidden bg-white rounded-3xl shadow-2xl p-8 sm:p-10">
             <div class="text-center mb-10">
                 <div id="trophy" class="text-7xl sm:text-8xl mb-4 transition-all">📜</div>
                 <h2 class="text-3xl sm:text-4xl font-bold text-gray-900">Quiz Complete!</h2>
                 <p class="text-gray-500 mt-2">Data Analyst Performance Report</p>
             </div>
-
             <div class="bg-gradient-to-br from-gray-50 to-white border border-gray-100 rounded-3xl p-8 mb-8">
                 <div class="flex justify-center items-center gap-10 sm:gap-12">
-                    <div class="text-center">
-                        <div id="score" class="text-6xl sm:text-7xl font-bold text-gray-900">24/30</div>
-                        <div class="text-xs text-gray-400 mt-1 tracking-widest">YOUR SCORE</div>
-                    </div>
+                    <div class="text-center"><div id="score" class="text-6xl sm:text-7xl font-bold text-gray-900">24/30</div><div class="text-xs text-gray-400 mt-1 tracking-widest">YOUR SCORE</div></div>
                     <div class="h-20 w-px bg-gray-200"></div>
-                    <div class="text-center">
-                        <div id="percentage" class="text-6xl sm:text-7xl font-bold text-emerald-600">80%</div>
-                        <div class="text-xs text-gray-400 mt-1 tracking-widest">OVERALL ACCURACY</div>
-                    </div>
+                    <div class="text-center"><div id="percentage" class="text-6xl sm:text-7xl font-bold text-emerald-600">80%</div><div class="text-xs text-gray-400 mt-1 tracking-widest">OVERALL ACCURACY</div></div>
                 </div>
             </div>
-
             <div class="grid grid-cols-3 gap-4 mb-8">
-                <div class="bg-emerald-50 rounded-3xl p-6 text-center border border-emerald-100">
-                    <div id="correct-count" class="text-4xl sm:text-5xl font-bold text-emerald-600">24</div>
-                    <div class="text-xs font-semibold text-emerald-700 mt-3 tracking-widest">CORRECT</div>
-                </div>
-                <div class="bg-rose-50 rounded-3xl p-6 text-center border border-rose-100">
-                    <div id="incorrect-count" class="text-4xl sm:text-5xl font-bold text-rose-600">3</div>
-                    <div class="text-xs font-semibold text-rose-700 mt-3 tracking-widest">INCORRECT</div>
-                </div>
-                <div class="bg-zinc-50 rounded-3xl p-6 text-center border border-zinc-100">
-                    <div id="skipped-count" class="text-4xl sm:text-5xl font-bold text-zinc-600">3</div>
-                    <div class="text-xs font-semibold text-zinc-700 mt-3 tracking-widest">SKIPPED</div>
-                </div>
+                <div class="bg-emerald-50 rounded-3xl p-6 text-center border border-emerald-100"><div id="correct-count" class="text-4xl sm:text-5xl font-bold text-emerald-600">24</div><div class="text-xs font-semibold text-emerald-700 mt-3 tracking-widest">CORRECT</div></div>
+                <div class="bg-rose-50 rounded-3xl p-6 text-center border border-rose-100"><div id="incorrect-count" class="text-4xl sm:text-5xl font-bold text-rose-600">3</div><div class="text-xs font-semibold text-rose-700 mt-3 tracking-widest">INCORRECT</div></div>
+                <div class="bg-zinc-50 rounded-3xl p-6 text-center border border-zinc-100"><div id="skipped-count" class="text-4xl sm:text-5xl font-bold text-zinc-600">3</div><div class="text-xs font-semibold text-zinc-700 mt-3 tracking-widest">SKIPPED</div></div>
             </div>
-
             <div id="insights" class="bg-emerald-50 border border-emerald-100 rounded-3xl p-6 sm:p-7 text-sm leading-relaxed text-emerald-950"></div>
-
             <div class="flex flex-col sm:flex-row gap-4 mt-10">
-                <button onclick="restartQuiz()" 
-                        class="flex-1 bg-gray-900 hover:bg-black text-white font-semibold py-5 rounded-3xl transition-all active:scale-[0.97]">
-                    Play Again
-                </button>
-                <button onclick="shareResults()" 
-                        class="flex-1 border-2 border-emerald-200 hover:border-emerald-400 font-semibold py-5 rounded-3xl transition-all">
-                    Share My Report 📤
-                </button>
+                <button onclick="restartQuiz()" class="flex-1 bg-gray-900 hover:bg-black text-white font-semibold py-5 rounded-3xl transition-all active:scale-[0.97]">Play Again</button>
+                <button onclick="shareResults()" class="flex-1 border-2 border-emerald-200 hover:border-emerald-400 font-semibold py-5 rounded-3xl transition-all">Share My Report 📤</button>
             </div>
-
-            <div onclick="showAnswers()" 
-                 class="mt-6 text-center text-emerald-600 hover:text-emerald-700 cursor-pointer font-medium flex items-center justify-center gap-2">
-                Review All Answers ↓
-            </div>
+            <div onclick="showAnswers()" class="mt-6 text-center text-emerald-600 hover:text-emerald-700 cursor-pointer font-medium flex items-center justify-center gap-2">Review All Answers ↓</div>
         </div>
 
-        <!-- Review Modal -->
         <div id="review-modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
             <div class="bg-white rounded-3xl w-full max-w-2xl max-h-[92vh] flex flex-col">
                 <div class="p-6 border-b flex items-center justify-between bg-white sticky top-0 z-10 rounded-t-3xl">
                     <h3 class="font-semibold text-xl">Detailed Review • Unit 4 (30 Questions)</h3>
-                    <button onclick="hideReview()" 
-                            class="w-10 h-10 flex items-center justify-center text-4xl leading-none text-gray-400 hover:text-gray-600 transition-colors">×</button>
+                    <button onclick="hideReview()" class="w-10 h-10 flex items-center justify-center text-4xl leading-none text-gray-400 hover:text-gray-600 transition-colors">×</button>
                 </div>
                 <div id="review-content" class="flex-1 overflow-y-auto p-6 space-y-8"></div>
             </div>
@@ -167,371 +89,266 @@
     </div>
 
     <script>
-        // ====================== 30 MCQs FROM UNIT 4 PDF ======================
-        const questions = [
-            {
-                question: "Intellectual Property (IP) refers to:",
-                options: ["Only physical buildings", "Creations of the mind such as inventions, literary works, designs and symbols", "Only government documents", "Only money"],
-                answer: 1
-            },
-            {
-                question: "One major justification for IP rights is:",
-                options: ["To stop all innovation", "To provide incentive for creators and combat free-rider problem", "To make everything free", "Only for government use"],
-                answer: 1
-            },
-            {
-                question: "Nepal’s primary law governing patents, designs and trademarks is:",
-                options: ["Copyright Act 2059", "Patent, Design and Trademark Act, 2022 (1965)", "Privacy Act 2075", "Electronic Transaction Act only"],
-                answer: 1
-            },
-            {
-                question: "Nepal is a signatory to:",
-                options: ["Only WTO TRIPS", "Paris Convention (1883) and WTO TRIPS Agreement (1995)", "Only Patent Cooperation Treaty", "None of the above"],
-                answer: 1
-            },
-            {
-                question: "The proposed Industrial Property Bill 2025 aims to introduce:",
-                options: ["Only old laws", "Trade Secrets, Geographical Indications and Layout Designs", "Only copyright", "No new concepts"],
-                answer: 1
-            },
-            {
-                question: "Copyright protects:",
-                options: ["The idea itself", "The expression of an idea (not the idea)", "Only physical objects", "Only government documents"],
-                answer: 1
-            },
-            {
-                question: "Which of the following is protected by copyright?",
-                options: ["A mathematical formula", "A book, song, painting or computer software", "A new machine design", "A business idea"],
-                answer: 1
-            },
-            {
-                question: "In Nepal, copyright is governed by:",
-                options: ["Patent Act 1965", "Copyright Act, 2059 (2002)", "Privacy Act only", "Trademark Act only"],
-                answer: 1
-            },
-            {
-                question: "The Copyright Bill 2024 proposes the creation of:",
-                options: ["IP Police", "Only new taxes", "Only digital certificates", "Nothing new"],
-                answer: 0
-            },
-            {
-                question: "One advantage of copyright is:",
-                options: ["It protects ideas only", "It provides economic rights (royalties) and moral rights", "It expires immediately", "It requires registration to exist"],
-                answer: 1
-            },
-            {
-                question: "A patent grants:",
-                options: ["Only 1 year protection", "An exclusive right for an invention", "Protection for ideas only", "No monopoly"],
-                answer: 1
-            },
-            {
-                question: "The three criteria for patentability are:",
-                options: ["Novelty, Utility, Inventive Step", "Only novelty", "Only cost", "Only popularity"],
-                answer: 0
-            },
-            {
-                question: "In Nepal, a patent is granted for:",
-                options: ["21 years immediately", "7 years initially (renewable up to 21 years total)", "Forever", "Only 3 years"],
-                answer: 1
-            },
-            {
-                question: "Patent applications in Nepal are filed at:",
-                options: ["Supreme Court", "Department of Industry (DOI)", "Police station", "Local municipality"],
-                answer: 1
-            },
-            {
-                question: "As of 2025, Nepal has registered only:",
-                options: ["Over 10,000 patents", "89 patents", "Zero patents", "1 million patents"],
-                answer: 1
-            },
-            {
-                question: "A trade secret protects:",
-                options: ["Only registered inventions", "Confidential information with economic value (e.g., customer lists, recipes)", "Public domain information", "Only trademarks"],
-                answer: 1
-            },
-            {
-                question: "Currently in Nepal, trade secrets are protected under:",
-                options: ["Specific law since 1965", "No specific provision in the 1965 Act (new bill proposes protection)", "Copyright Act only", "Patent Act only"],
-                answer: 1
-            },
-            {
-                question: "The famous Nepali example of a trade secret is:",
-                options: ["Starbucks recipe", "Juju Dhau (King Yogurt) recipe from Bhaktapur", "Coca-Cola only", "Nothing"],
-                answer: 1
-            },
-            {
-                question: "Plagiarism is:",
-                options: ["Always legal", "Presenting someone else’s work as your own without attribution", "Only copying code", "Only in books"],
-                answer: 1
-            },
-            {
-                question: "Reverse engineering is:",
-                options: ["Always illegal", "Legal for interoperability and security research but illegal if it copies patented technology", "Only for hardware", "Never done"],
-                answer: 1
-            },
-            {
-                question: "Open Source software:",
-                options: ["Is the same as public domain", "Comes with licenses (GPL, MIT, Apache) that must be followed", "Has no rules", "Cannot be used commercially"],
-                answer: 1
-            },
-            {
-                question: "Competitive Intelligence (CI) is:",
-                options: ["Industrial espionage", "Legal gathering of public information about competitors", "Only hacking", "Illegal always"],
-                answer: 1
-            },
-            {
-                question: "Trademark infringement occurs when:",
-                options: ["You use your own name", "Someone uses a similar mark likely to cause confusion", "You register first", "No one notices"],
-                answer: 1
-            },
-            {
-                question: "In Nepal, trademarks are registered at:",
-                options: ["Supreme Court", "Department of Industry (DOI)", "Police only", "No registration needed"],
-                answer: 1
-            },
-            {
-                question: "Cybersquatting is:",
-                options: ["Buying normal domains", "Registering a domain with bad-faith intent to profit from someone else’s trademark", "Only free domains", "Legal always"],
-                answer: 1
-            },
-            {
-                question: "Nepal handles cybersquatting disputes under:",
-                options: ["Only new law", "Trademark Act 1965 and Electronic Transaction Act 2008", "Only privacy law", "Nothing"],
-                answer: 1
-            },
-            {
-                question: "Moral rights under copyright include:",
-                options: ["Only money", "Right to be credited and object to distortion of work", "Only selling rights", "No rights"],
-                answer: 1
-            },
-            {
-                question: "The proposed Copyright Bill 2024 aims to create:",
-                options: ["No enforcement", "IP Police for raids against piracy", "Only taxes", "Nothing"],
-                answer: 1
-            },
-            {
-                question: "Trade secrets can potentially last:",
-                options: ["Only 7 years", "Forever as long as they remain secret", "Only 1 year", "Only after registration"],
-                answer: 1
-            },
-            {
-                question: "The Industrial Property Bill 2025 is intended to replace:",
-                options: ["Copyright Act", "Patent, Design and Trademark Act, 2022 (1965)", "Privacy Act", "None"],
-                answer: 1
-            }
-        ]
-        // =====================================================================
+        const originalQuestions = [
+            { question: "Intellectual Property (IP) refers to:", options: ["Only physical buildings", "Creations of the mind such as inventions, literary works, designs and symbols", "Only government documents", "Only money"], answer: 1 },
+            { question: "One major justification for IP rights is:", options: ["To stop all innovation", "To provide incentive for creators and combat free-rider problem", "To make everything free", "Only for government use"], answer: 1 },
+            { question: "Nepal’s primary law governing patents, designs and trademarks is:", options: ["Copyright Act 2059", "Patent, Design and Trademark Act, 2022 (1965)", "Privacy Act 2075", "Electronic Transaction Act only"], answer: 1 },
+            { question: "Nepal is a signatory to:", options: ["Only WTO TRIPS", "Paris Convention (1883) and WTO TRIPS Agreement (1995)", "Only Patent Cooperation Treaty", "None of the above"], answer: 1 },
+            { question: "The proposed Industrial Property Bill 2025 aims to introduce:", options: ["Only old laws", "Trade Secrets, Geographical Indications and Layout Designs", "Only copyright", "No new concepts"], answer: 1 },
+            { question: "Copyright protects:", options: ["The idea itself", "The expression of an idea (not the idea)", "Only physical objects", "Only government documents"], answer: 1 },
+            { question: "Which of the following is protected by copyright?", options: ["A mathematical formula", "A book, song, painting or computer software", "A new machine design", "A business idea"], answer: 1 },
+            { question: "In Nepal, copyright is governed by:", options: ["Patent Act 1965", "Copyright Act, 2059 (2002)", "Privacy Act only", "Trademark Act only"], answer: 1 },
+            { question: "The Copyright Bill 2024 proposes the creation of:", options: ["IP Police", "Only new taxes", "Only digital certificates", "Nothing new"], answer: 0 },
+            { question: "One advantage of copyright is:", options: ["It protects ideas only", "It provides economic rights (royalties) and moral rights", "It expires immediately", "It requires registration to exist"], answer: 1 },
+            { question: "A patent grants:", options: ["Only 1 year protection", "An exclusive right for an invention", "Protection for ideas only", "No monopoly"], answer: 1 },
+            { question: "The three criteria for patentability are:", options: ["Novelty, Utility, Inventive Step", "Only novelty", "Only cost", "Only popularity"], answer: 0 },
+            { question: "In Nepal, a patent is granted for:", options: ["21 years immediately", "7 years initially (renewable up to 21 years total)", "Forever", "Only 3 years"], answer: 1 },
+            { question: "Patent applications in Nepal are filed at:", options: ["Supreme Court", "Department of Industry (DOI)", "Police station", "Local municipality"], answer: 1 },
+            { question: "As of 2025, Nepal has registered only:", options: ["Over 10,000 patents", "89 patents", "Zero patents", "1 million patents"], answer: 1 },
+            { question: "A trade secret protects:", options: ["Only registered inventions", "Confidential information with economic value (e.g., customer lists, recipes)", "Public domain information", "Only trademarks"], answer: 1 },
+            { question: "Currently in Nepal, trade secrets are protected under:", options: ["Specific law since 1965", "No specific provision in the 1965 Act (new bill proposes protection)", "Copyright Act only", "Patent Act only"], answer: 1 },
+            { question: "The famous Nepali example of a trade secret is:", options: ["Starbucks recipe", "Juju Dhau (King Yogurt) recipe from Bhaktapur", "Coca-Cola only", "Nothing"], answer: 1 },
+            { question: "Plagiarism is:", options: ["Always legal", "Presenting someone else’s work as your own without attribution", "Only copying code", "Only in books"], answer: 1 },
+            { question: "Reverse engineering is:", options: ["Always illegal", "Legal for interoperability and security research but illegal if it copies patented technology", "Only for hardware", "Never done"], answer: 1 },
+            { question: "Open Source software:", options: ["Is the same as public domain", "Comes with licenses (GPL, MIT, Apache) that must be followed", "Has no rules", "Cannot be used commercially"], answer: 1 },
+            { question: "Competitive Intelligence (CI) is:", options: ["Industrial espionage", "Legal gathering of public information about competitors", "Only hacking", "Illegal always"], answer: 1 },
+            { question: "Trademark infringement occurs when:", options: ["You use your own name", "Someone uses a similar mark likely to cause confusion", "You register first", "No one notices"], answer: 1 },
+            { question: "In Nepal, trademarks are registered at:", options: ["Supreme Court", "Department of Industry (DOI)", "Police only", "No registration needed"], answer: 1 },
+            { question: "Cybersquatting is:", options: ["Buying normal domains", "Registering a domain with bad-faith intent to profit from someone else’s trademark", "Only free domains", "Legal always"], answer: 1 },
+            { question: "Nepal handles cybersquatting disputes under:", options: ["Only new law", "Trademark Act 1965 and Electronic Transaction Act 2008", "Only privacy law", "Nothing"], answer: 1 },
+            { question: "Moral rights under copyright include:", options: ["Only money", "Right to be credited and object to distortion of work", "Only selling rights", "No rights"], answer: 1 },
+            { question: "The proposed Copyright Bill 2024 aims to create:", options: ["No enforcement", "IP Police for raids against piracy", "Only taxes", "Nothing"], answer: 1 },
+            { question: "Trade secrets can potentially last:", options: ["Only 7 years", "Forever as long as they remain secret", "Only 1 year", "Only after registration"], answer: 1 },
+            { question: "The Industrial Property Bill 2025 is intended to replace:", options: ["Copyright Act", "Patent, Design and Trademark Act, 2022 (1965)", "Privacy Act", "None"], answer: 1 }
+        ];
 
-        let currentQuestionIndex = 0
-        let selectedAnswers = new Array(questions.length).fill(null)
+        let questions = [];
+        let currentQuestionIndex = 0;
+        let selectedAnswers = [];
+
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function prepareShuffledQuestions() {
+            questions = originalQuestions.map(q => {
+                const shuffledOptions = shuffleArray(q.options);
+                const originalCorrect = q.options[q.answer];
+                const newAnswerIndex = shuffledOptions.indexOf(originalCorrect);
+                return { question: q.question, options: shuffledOptions, answer: newAnswerIndex };
+            });
+            selectedAnswers = new Array(questions.length).fill(null);
+        }
 
         function renderQuestion() {
-            const q = questions[currentQuestionIndex]
-            document.getElementById('progress').style.width = `${((currentQuestionIndex + 1) / questions.length) * 100}%`
-            document.getElementById('question-counter').textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`
-            document.getElementById('question-text').textContent = q.question
-            renderOptions()
-            updateNavigationButtons()
+            const q = questions[currentQuestionIndex];
+            document.getElementById('progress').style.width = `${((currentQuestionIndex + 1) / questions.length) * 100}%`;
+            document.getElementById('question-counter').textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
+            document.getElementById('question-text').textContent = q.question;
+            renderOptions();
+            updateNavigationButtons();
         }
 
         function renderOptions() {
-            const container = document.getElementById('options')
-            container.innerHTML = ''
-            const q = questions[currentQuestionIndex]
-            const selected = selectedAnswers[currentQuestionIndex]
-            const isLocked = selected !== null
-            const correctIdx = q.answer
+            const container = document.getElementById('options');
+            container.innerHTML = '';
+            const q = questions[currentQuestionIndex];
+            const selected = selectedAnswers[currentQuestionIndex];
+            const isLocked = selected !== null;
+            const correctIdx = q.answer;
 
             q.options.forEach((option, idx) => {
-                const btn = document.createElement('button')
-                let btnClass = `option w-full text-left px-6 py-5 sm:py-6 rounded-3xl border-2 text-base sm:text-lg font-medium flex items-center gap-5 group`
-                let extraHTML = ''
+                const btn = document.createElement('button');
+                let btnClass = `option w-full text-left px-6 py-5 sm:py-6 rounded-3xl border-2 text-base sm:text-lg font-medium flex items-center gap-5 group`;
+                let extraHTML = '';
 
                 if (isLocked) {
-                    btn.disabled = true
+                    btn.disabled = true;
                     if (idx === correctIdx) {
-                        btnClass += ' border-emerald-400 bg-emerald-50 text-emerald-900'
-                        extraHTML = `<span class="ml-auto text-3xl text-emerald-500">✓</span>`
+                        btnClass += ' border-emerald-400 bg-emerald-50 text-emerald-900';
+                        extraHTML = `<span class="ml-auto text-3xl text-emerald-500">✓</span>`;
                     } else if (idx === selected) {
-                        btnClass += ' border-rose-400 bg-rose-50 text-rose-900'
-                        extraHTML = `<span class="ml-auto text-3xl text-rose-500">✕</span>`
+                        btnClass += ' border-rose-400 bg-rose-50 text-rose-900';
+                        extraHTML = `<span class="ml-auto text-3xl text-rose-500">✕</span>`;
                     } else {
-                        btnClass += ' border-gray-200 bg-white/70 opacity-80'
+                        btnClass += ' border-gray-200 bg-white/70 opacity-80';
                     }
                 } else {
-                    btnClass += ' border-gray-200 hover:border-emerald-300 hover:bg-emerald-50'
-                    if (idx === selected) btnClass += ' border-emerald-400 bg-emerald-50'
+                    btnClass += ' border-gray-200 hover:border-emerald-300 hover:bg-emerald-50';
+                    if (idx === selected) btnClass += ' border-emerald-400 bg-emerald-50';
                 }
 
-                btn.className = btnClass
+                btn.className = btnClass;
                 btn.innerHTML = `
                     <span class="w-9 h-9 flex-shrink-0 rounded-2xl border flex items-center justify-center text-base font-bold">${String.fromCharCode(65 + idx)}</span>
                     <span class="flex-1">${option}</span>
                     ${extraHTML}
-                `
-                if (!isLocked) btn.onclick = () => selectOption(idx)
-                container.appendChild(btn)
-            })
+                `;
+                if (!isLocked) btn.onclick = () => selectOption(idx);
+                container.appendChild(btn);
+            });
 
-            const statusEl = document.getElementById('status')
-            statusEl.textContent = isLocked ? 'Answered' : 'Unanswered'
-            statusEl.parentElement.classList.toggle('bg-emerald-100', isLocked)
-            statusEl.parentElement.classList.toggle('text-emerald-700', isLocked)
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = isLocked ? 'Answered' : 'Unanswered';
+            statusEl.parentElement.classList.toggle('bg-emerald-100', isLocked);
+            statusEl.parentElement.classList.toggle('text-emerald-700', isLocked);
         }
 
         function selectOption(index) {
-            if (selectedAnswers[currentQuestionIndex] !== null) return
-            selectedAnswers[currentQuestionIndex] = index
-            renderOptions()
-            updateNavigationButtons()
+            if (selectedAnswers[currentQuestionIndex] !== null) return;
+            selectedAnswers[currentQuestionIndex] = index;
+            renderOptions();
+            updateNavigationButtons();
         }
 
         function updateNavigationButtons() {
-            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0
-            const nextBtn = document.getElementById('next-btn')
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            const nextBtn = document.getElementById('next-btn');
             nextBtn.innerHTML = currentQuestionIndex === questions.length - 1 
                 ? `Finish Quiz <span class="text-2xl">🏁</span>` 
-                : `Next Question <span class="text-2xl">→</span>`
+                : `Next Question <span class="text-2xl">→</span>`;
         }
 
         function nextQuestion() {
             if (currentQuestionIndex < questions.length - 1) {
-                currentQuestionIndex++
-                renderQuestion()
+                currentQuestionIndex++;
+                renderQuestion();
             } else {
-                showResults()
+                showResults();
             }
         }
 
         function previousQuestion() {
             if (currentQuestionIndex > 0) {
-                currentQuestionIndex--
-                renderQuestion()
+                currentQuestionIndex--;
+                renderQuestion();
             }
         }
 
         function calculateResults() {
-            let correct = 0, incorrect = 0, skipped = 0
+            let correct = 0, incorrect = 0, skipped = 0;
             selectedAnswers.forEach((selected, i) => {
-                if (selected === null) skipped++
-                else if (selected === questions[i].answer) correct++
-                else incorrect++
-            })
-            return { correct, incorrect, skipped, total: questions.length }
+                if (selected === null) skipped++;
+                else if (selected === questions[i].answer) correct++;
+                else incorrect++;
+            });
+            return { correct, incorrect, skipped, total: questions.length };
         }
 
         function showResults() {
-            const { correct, incorrect, skipped, total } = calculateResults()
-            const percentage = Math.round((correct / total) * 100)
-            const attempted = correct + incorrect
-            const accuracyAttempted = attempted > 0 ? Math.round((correct / attempted) * 100) : 0
+            const { correct, incorrect, skipped, total } = calculateResults();
+            const percentage = Math.round((correct / total) * 100);
+            const attempted = correct + incorrect;
+            const accuracyAttempted = attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
 
-            document.getElementById('quiz-card').classList.add('hidden')
-            document.getElementById('results-screen').classList.remove('hidden')
+            document.getElementById('quiz-card').classList.add('hidden');
+            document.getElementById('results-screen').classList.remove('hidden');
 
-            document.getElementById('score').textContent = `${correct}/${total}`
-            document.getElementById('percentage').textContent = `${percentage}%`
-            document.getElementById('correct-count').textContent = correct
-            document.getElementById('incorrect-count').textContent = incorrect
-            document.getElementById('skipped-count').textContent = skipped
+            document.getElementById('score').textContent = `${correct}/${total}`;
+            document.getElementById('percentage').textContent = `${percentage}%`;
+            document.getElementById('correct-count').textContent = correct;
+            document.getElementById('incorrect-count').textContent = incorrect;
+            document.getElementById('skipped-count').textContent = skipped;
 
-            const trophyEl = document.getElementById('trophy')
-            trophyEl.textContent = percentage >= 85 ? '🏆' : percentage >= 65 ? '🔥' : percentage >= 40 ? '👍' : '📚'
+            const trophyEl = document.getElementById('trophy');
+            trophyEl.textContent = percentage >= 85 ? '🏆' : percentage >= 65 ? '🔥' : percentage >= 40 ? '👍' : '📚';
 
-            let insightsHTML = `
-                You scored <strong>${correct}</strong> out of <strong>${total}</strong> (${percentage}% overall).<br><br>
-                ${attempted > 0 ? `Accuracy on attempted questions: <strong>${accuracyAttempted}%</strong>.<br><br>` : ''}
-                ${skipped > 0 
-                    ? `💡 You skipped <strong>${skipped}</strong> questions. Attempting them could have boosted your score significantly!` 
-                    : `🌟 Outstanding! You attempted every question.`}
-            `
-            document.getElementById('insights').innerHTML = insightsHTML
+            let insightsHTML = `You scored <strong>${correct}</strong> out of <strong>${total}</strong> (${percentage}% overall).<br><br>${attempted > 0 ? `Accuracy on attempted questions: <strong>${accuracyAttempted}%</strong>.<br><br>` : ''}${skipped > 0 ? `💡 You skipped <strong>${skipped}</strong> questions. Attempting them could have boosted your score significantly!` : `🌟 Outstanding! You attempted every question.`}`;
+            document.getElementById('insights').innerHTML = insightsHTML;
         }
 
         function restartQuiz() {
-            currentQuestionIndex = 0
-            selectedAnswers = new Array(questions.length).fill(null)
-            document.getElementById('quiz-card').classList.remove('hidden')
-            document.getElementById('results-screen').classList.add('hidden')
-            document.getElementById('review-modal').classList.add('hidden')
-            renderQuestion()
+            prepareShuffledQuestions();
+            currentQuestionIndex = 0;
+            document.getElementById('quiz-card').classList.remove('hidden');
+            document.getElementById('results-screen').classList.add('hidden');
+            document.getElementById('review-modal').classList.add('hidden');
+            renderQuestion();
         }
 
         function shareResults() {
-            const { correct, incorrect, skipped, total } = calculateResults()
-            const percentage = Math.round((correct / total) * 100)
-            const text = `📜 Quizzy Pro Result (Unit 4 Intellectual Property)\nI scored ${correct}/${total} (${percentage}%) — ${correct} correct, ${incorrect} wrong, ${skipped} skipped!\n\nBeat my score? Download the HTML file and play instantly!`
+            const { correct, incorrect, skipped, total } = calculateResults();
+            const percentage = Math.round((correct / total) * 100);
+            const text = `📜 Quizzy Pro Result (Unit 4 Intellectual Property)\nI scored ${correct}/${total} (${percentage}%) — ${correct} correct, ${incorrect} wrong, ${skipped} skipped!\n\nBeat my score? Download the HTML file and play instantly!`;
             navigator.clipboard.writeText(text).then(() => {
-                const btn = event.currentTarget
-                const orig = btn.textContent
-                btn.textContent = '✅ Report Copied!'
-                setTimeout(() => btn.textContent = orig, 2000)
-            })
+                const btn = event.currentTarget;
+                const orig = btn.textContent;
+                btn.textContent = '✅ Report Copied!';
+                setTimeout(() => btn.textContent = orig, 2000);
+            });
         }
 
         function showAnswers() {
-            const modal = document.getElementById('review-modal')
-            const content = document.getElementById('review-content')
-            content.innerHTML = ''
-            
+            const modal = document.getElementById('review-modal');
+            const content = document.getElementById('review-content');
+            content.innerHTML = '';
             questions.forEach((q, i) => {
-                const selected = selectedAnswers[i]
-                const isCorrect = selected === q.answer
-                let statusHTML = ''
+                const selected = selectedAnswers[i];
+                const isCorrect = selected === q.answer;
+                let statusHTML = '';
                 if (selected === null) {
-                    statusHTML = `<div class="flex items-center gap-3 text-amber-600"><span class="text-3xl">⏭️</span><span class="font-semibold">Skipped</span></div>`
+                    statusHTML = `<div class="flex items-center gap-3 text-amber-600"><span class="text-3xl">⏭️</span><span class="font-semibold">Skipped</span></div>`;
                 } else if (isCorrect) {
-                    statusHTML = `<div class="flex items-center gap-3 text-emerald-600"><span class="text-3xl">✅</span><span class="font-semibold">Correct</span></div>`
+                    statusHTML = `<div class="flex items-center gap-3 text-emerald-600"><span class="text-3xl">✅</span><span class="font-semibold">Correct</span></div>`;
                 } else {
-                    statusHTML = `<div class="flex items-center gap-3 text-rose-600"><span class="text-3xl">❌</span><span class="font-semibold">Incorrect</span></div>`
+                    statusHTML = `<div class="flex items-center gap-3 text-rose-600"><span class="text-3xl">❌</span><span class="font-semibold">Incorrect</span></div>`;
                 }
-                
-                const div = document.createElement('div')
-                div.className = `border rounded-3xl p-7 ${selected === null ? 'border-amber-200 bg-amber-50' : isCorrect ? 'border-emerald-200 bg-emerald-50' : 'border-rose-200 bg-rose-50'}`
-                div.innerHTML = `
-                    ${statusHTML}
-                    <p class="font-medium mt-5 text-lg leading-tight">${q.question}</p>
-                    <div class="grid grid-cols-1 gap-3 mt-7">
-                        ${q.options.map((opt, idx) => {
-                            let optClass = 'px-6 py-4 rounded-2xl border text-base flex justify-between items-center'
-                            if (idx === q.answer) optClass += ' border-emerald-400 bg-emerald-100 text-emerald-800'
-                            else if (selected !== null && idx === selected) optClass += ' border-rose-400 bg-rose-100 text-rose-800 line-through'
-                            else optClass += ' border-gray-200 bg-white'
-                            return `<div class="${optClass}">
-                                        <span>${String.fromCharCode(65 + idx)}. ${opt}</span>
-                                        ${idx === q.answer ? '<span class="text-emerald-600 text-xl">✓</span>' : ''}
-                                    </div>`
-                        }).join('')}
-                    </div>
-                `
-                content.appendChild(div)
-            })
-            modal.classList.remove('hidden')
+                const div = document.createElement('div');
+                div.className = `border rounded-3xl p-7 ${selected === null ? 'border-amber-200 bg-amber-50' : isCorrect ? 'border-emerald-200 bg-emerald-50' : 'border-rose-200 bg-rose-50'}`;
+                div.innerHTML = `${statusHTML}<p class="font-medium mt-5 text-lg leading-tight">${q.question}</p><div class="grid grid-cols-1 gap-3 mt-7">${q.options.map((opt, idx) => { let optClass = 'px-6 py-4 rounded-2xl border text-base flex justify-between items-center'; if (idx === q.answer) optClass += ' border-emerald-400 bg-emerald-100 text-emerald-800'; else if (selected !== null && idx === selected) optClass += ' border-rose-400 bg-rose-100 text-rose-800 line-through'; else optClass += ' border-gray-200 bg-white'; return `<div class="${optClass}"><span>${String.fromCharCode(65 + idx)}. ${opt}</span>${idx === q.answer ? '<span class="text-emerald-600 text-xl">✓</span>' : ''}</div>`; }).join('')}</div>`;
+                content.appendChild(div);
+            });
+            modal.classList.remove('hidden');
         }
 
         function hideReview() {
-            document.getElementById('review-modal').classList.add('hidden')
+            document.getElementById('review-modal').classList.add('hidden');
         }
 
         function handleKeyboard(e) {
-            if (document.getElementById('quiz-card').classList.contains('hidden')) return
-            if (e.key === 'ArrowRight') nextQuestion()
-            if (e.key === 'ArrowLeft') previousQuestion()
+            if (document.getElementById('quiz-card').classList.contains('hidden')) return;
+            if (e.key === 'ArrowRight') nextQuestion();
+            if (e.key === 'ArrowLeft') previousQuestion();
             if (e.key >= '1' && e.key <= '4') {
-                const idx = parseInt(e.key) - 1
+                const idx = parseInt(e.key) - 1;
                 if (idx < questions[currentQuestionIndex].options.length && selectedAnswers[currentQuestionIndex] === null) {
-                    selectOption(idx)
+                    selectOption(idx);
                 }
             }
         }
 
-        function startQuiz() {
-            renderQuestion()
-            document.addEventListener('keydown', handleKeyboard)
-            console.log('%c✅ Quizzy Pro Unit 4 (30 MCQs) loaded successfully! Fully responsive on mobile, tablet & PC.', 'color:#10b981; font-weight:700')
+        function prepareShuffledQuestions() {
+            questions = originalQuestions.map(q => {
+                const shuffledOptions = shuffleArray(q.options);
+                const originalCorrect = q.options[q.answer];
+                const newAnswerIndex = shuffledOptions.indexOf(originalCorrect);
+                return { question: q.question, options: shuffledOptions, answer: newAnswerIndex };
+            });
+            selectedAnswers = new Array(questions.length).fill(null);
         }
 
-        window.onload = startQuiz
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function startQuiz() {
+            prepareShuffledQuestions();
+            currentQuestionIndex = 0;
+            renderQuestion();
+            document.addEventListener('keydown', handleKeyboard);
+        }
+
+        window.onload = startQuiz;
     </script>
 </body>
 </html>
