@@ -40,7 +40,10 @@
             <div class="p-6 sm:p-8">
                 <div class="flex justify-between items-center mb-6">
                     <div id="question-counter" class="text-sm font-semibold text-gray-500">Question 1 of 30</div>
-                    <div class="text-xs font-mono bg-amber-100 text-amber-700 px-5 py-1.5 rounded-3xl flex items-center gap-1"><span>📌</span><span id="status">Unanswered</span></div>
+                    <div class="flex items-center gap-4">
+                        <div id="timer" class="font-mono text-lg font-semibold text-red-600">60</div>
+                        <div class="text-xs font-mono bg-amber-100 text-amber-700 px-5 py-1.5 rounded-3xl flex items-center gap-1"><span>📌</span><span id="status">Unanswered</span></div>
+                    </div>
                 </div>
                 <h2 id="question-text" class="text-xl sm:text-2xl font-semibold text-gray-900 leading-tight mb-10 min-h-[88px]"></h2>
                 <div id="options" class="space-y-3 sm:space-y-4 mb-10"></div>
@@ -125,6 +128,8 @@
         let questions = [];
         let currentQuestionIndex = 0;
         let selectedAnswers = [];
+        let timerInterval = null;
+        let timeLeft = 60;
 
         function shuffleArray(array) {
             const arr = [...array];
@@ -136,13 +141,45 @@
         }
 
         function prepareShuffledQuestions() {
-            questions = originalQuestions.map(q => {
-                const shuffledOptions = shuffleArray(q.options);
-                const originalCorrect = q.options[q.answer];
-                const newAnswerIndex = shuffledOptions.indexOf(originalCorrect);
+            questions = originalQuestions.map((q, index) => {
+                let shuffledOptions = shuffleArray(q.options);
+                let originalCorrect = q.options[q.answer];
+                let newAnswerIndex = shuffledOptions.indexOf(originalCorrect);
+                if (index > 0 && newAnswerIndex === questions[index - 1].answer) {
+                    do {
+                        shuffledOptions = shuffleArray(q.options);
+                        newAnswerIndex = shuffledOptions.indexOf(originalCorrect);
+                    } while (newAnswerIndex === questions[index - 1].answer);
+                }
                 return { question: q.question, options: shuffledOptions, answer: newAnswerIndex };
             });
             selectedAnswers = new Array(questions.length).fill(null);
+        }
+
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            timeLeft = 60;
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    if (selectedAnswers[currentQuestionIndex] === null) {
+                        nextQuestion();
+                    }
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const timerEl = document.getElementById('timer');
+            timerEl.textContent = timeLeft;
+            if (timeLeft <= 10) {
+                timerEl.classList.add('text-red-600');
+            } else {
+                timerEl.classList.remove('text-red-600');
+            }
         }
 
         function renderQuestion() {
@@ -152,6 +189,7 @@
             document.getElementById('question-text').textContent = q.question;
             renderOptions();
             updateNavigationButtons();
+            startTimer();
         }
 
         function renderOptions() {
@@ -202,6 +240,7 @@
         function selectOption(index) {
             if (selectedAnswers[currentQuestionIndex] !== null) return;
             selectedAnswers[currentQuestionIndex] = index;
+            clearInterval(timerInterval);
             renderOptions();
             updateNavigationButtons();
         }
@@ -215,6 +254,7 @@
         }
 
         function nextQuestion() {
+            clearInterval(timerInterval);
             if (currentQuestionIndex < questions.length - 1) {
                 currentQuestionIndex++;
                 renderQuestion();
@@ -225,6 +265,7 @@
 
         function previousQuestion() {
             if (currentQuestionIndex > 0) {
+                clearInterval(timerInterval);
                 currentQuestionIndex--;
                 renderQuestion();
             }
@@ -323,10 +364,16 @@
         }
 
         function prepareShuffledQuestions() {
-            questions = originalQuestions.map(q => {
-                const shuffledOptions = shuffleArray(q.options);
-                const originalCorrect = q.options[q.answer];
-                const newAnswerIndex = shuffledOptions.indexOf(originalCorrect);
+            questions = originalQuestions.map((q, index) => {
+                let shuffledOptions = shuffleArray(q.options);
+                let originalCorrect = q.options[q.answer];
+                let newAnswerIndex = shuffledOptions.indexOf(originalCorrect);
+                if (index > 0 && newAnswerIndex === questions[index - 1].answer) {
+                    do {
+                        shuffledOptions = shuffleArray(q.options);
+                        newAnswerIndex = shuffledOptions.indexOf(originalCorrect);
+                    } while (newAnswerIndex === questions[index - 1].answer);
+                }
                 return { question: q.question, options: shuffledOptions, answer: newAnswerIndex };
             });
             selectedAnswers = new Array(questions.length).fill(null);
