@@ -7,37 +7,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        .option {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .option:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 25px -5px rgb(0 0 0 / 0.1);
-        }
-        
-        .option:disabled {
-            cursor: not-allowed;
-        }
-        
-        .progress-bar {
-            transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        
-        .quiz-container {
-            animation: fadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
-        
-        @keyframes fadeInScale {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
+        body { font-family: 'Poppins', sans-serif; }
+        .option { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .option:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 15px 25px -5px rgb(0 0 0 / 0.1); }
+        .option:disabled { cursor: not-allowed; }
+        .progress-bar { transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .quiz-container { animation: fadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        @keyframes fadeInScale { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         @media (max-width: 640px) {
             .option { padding: 1.25rem 1rem; font-size: 1rem; }
             h2 { font-size: 1.35rem; line-height: 1.3; }
@@ -46,7 +22,6 @@
 </head>
 <body class="bg-gradient-to-br from-blue-600 via-indigo-600 to-violet-600 min-h-screen flex items-center justify-center p-4">
     <div class="max-w-2xl w-full mx-auto">
-        <!-- Header -->
         <div class="flex items-center justify-between mb-8 text-white">
             <div class="flex items-center gap-3">
                 <div class="w-11 h-11 bg-white/20 backdrop-blur-xl rounded-3xl flex items-center justify-center text-4xl shadow-inner">⚖️</div>
@@ -55,111 +30,58 @@
                     <p class="text-white/70 text-sm -mt-1">Unit 5 • Ethical Decisions in Software Development & IT Organizations • 30 MCQs</p>
                 </div>
             </div>
-            <button onclick="restartQuiz()" 
-                    class="bg-white/10 hover:bg-white/20 backdrop-blur-md px-6 py-3 rounded-3xl text-sm font-semibold flex items-center gap-2 transition-all active:scale-95">
-                🔄 Restart
-            </button>
+            <button onclick="restartQuiz()" class="bg-white/10 hover:bg-white/20 backdrop-blur-md px-6 py-3 rounded-3xl text-sm font-semibold flex items-center gap-2 transition-all active:scale-95">🔄 Restart</button>
         </div>
 
-        <!-- Main Quiz Card -->
         <div id="quiz-card" class="quiz-container bg-white rounded-3xl shadow-2xl overflow-hidden">
             <div class="h-2 bg-gray-100">
                 <div id="progress" class="progress-bar h-full bg-gradient-to-r from-blue-500 via-indigo-500 to-violet-500 w-1/30"></div>
             </div>
-
             <div class="p-6 sm:p-8">
                 <div class="flex justify-between items-center mb-6">
                     <div id="question-counter" class="text-sm font-semibold text-gray-500">Question 1 of 30</div>
-                    <div class="text-xs font-mono bg-amber-100 text-amber-700 px-5 py-1.5 rounded-3xl flex items-center gap-1">
-                        <span>📌</span> 
-                        <span id="status">Unanswered</span>
-                    </div>
+                    <div class="text-xs font-mono bg-amber-100 text-amber-700 px-5 py-1.5 rounded-3xl flex items-center gap-1"><span>📌</span><span id="status">Unanswered</span></div>
                 </div>
-
                 <h2 id="question-text" class="text-xl sm:text-2xl font-semibold text-gray-900 leading-tight mb-10 min-h-[88px]"></h2>
-
                 <div id="options" class="space-y-3 sm:space-y-4 mb-10"></div>
-
                 <div class="flex items-center justify-between">
-                    <button onclick="previousQuestion()" 
-                            id="prev-btn"
-                            class="px-6 sm:px-8 py-3.5 text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center gap-2 disabled:opacity-40 transition-all">
-                        ← Previous
-                    </button>
-                    
-                    <button onclick="nextQuestion()" 
-                            id="next-btn"
-                            class="px-8 sm:px-12 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-3xl flex items-center gap-3 shadow-xl shadow-blue-500/40 hover:shadow-2xl transition-all">
-                        <span id="next-text">Next Question</span>
-                        <span class="text-2xl">→</span>
-                    </button>
+                    <button onclick="previousQuestion()" id="prev-btn" class="px-6 sm:px-8 py-3.5 text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center gap-2 disabled:opacity-40 transition-all">← Previous</button>
+                    <button onclick="nextQuestion()" id="next-btn" class="px-8 sm:px-12 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-3xl flex items-center gap-3 shadow-xl shadow-blue-500/40 hover:shadow-2xl transition-all"><span id="next-text">Next Question</span><span class="text-2xl">→</span></button>
                 </div>
             </div>
         </div>
 
-        <!-- Results Screen -->
         <div id="results-screen" class="hidden bg-white rounded-3xl shadow-2xl p-8 sm:p-10">
             <div class="text-center mb-10">
                 <div id="trophy" class="text-7xl sm:text-8xl mb-4 transition-all">⚖️</div>
                 <h2 class="text-3xl sm:text-4xl font-bold text-gray-900">Quiz Complete!</h2>
                 <p class="text-gray-500 mt-2">Data Analyst Performance Report</p>
             </div>
-
             <div class="bg-gradient-to-br from-gray-50 to-white border border-gray-100 rounded-3xl p-8 mb-8">
                 <div class="flex justify-center items-center gap-10 sm:gap-12">
-                    <div class="text-center">
-                        <div id="score" class="text-6xl sm:text-7xl font-bold text-gray-900">24/30</div>
-                        <div class="text-xs text-gray-400 mt-1 tracking-widest">YOUR SCORE</div>
-                    </div>
+                    <div class="text-center"><div id="score" class="text-6xl sm:text-7xl font-bold text-gray-900">24/30</div><div class="text-xs text-gray-400 mt-1 tracking-widest">YOUR SCORE</div></div>
                     <div class="h-20 w-px bg-gray-200"></div>
-                    <div class="text-center">
-                        <div id="percentage" class="text-6xl sm:text-7xl font-bold text-indigo-600">80%</div>
-                        <div class="text-xs text-gray-400 mt-1 tracking-widest">OVERALL ACCURACY</div>
-                    </div>
+                    <div class="text-center"><div id="percentage" class="text-6xl sm:text-7xl font-bold text-indigo-600">80%</div><div class="text-xs text-gray-400 mt-1 tracking-widest">OVERALL ACCURACY</div></div>
                 </div>
             </div>
-
             <div class="grid grid-cols-3 gap-4 mb-8">
-                <div class="bg-emerald-50 rounded-3xl p-6 text-center border border-emerald-100">
-                    <div id="correct-count" class="text-4xl sm:text-5xl font-bold text-emerald-600">24</div>
-                    <div class="text-xs font-semibold text-emerald-700 mt-3 tracking-widest">CORRECT</div>
-                </div>
-                <div class="bg-rose-50 rounded-3xl p-6 text-center border border-rose-100">
-                    <div id="incorrect-count" class="text-4xl sm:text-5xl font-bold text-rose-600">3</div>
-                    <div class="text-xs font-semibold text-rose-700 mt-3 tracking-widest">INCORRECT</div>
-                </div>
-                <div class="bg-zinc-50 rounded-3xl p-6 text-center border border-zinc-100">
-                    <div id="skipped-count" class="text-4xl sm:text-5xl font-bold text-zinc-600">3</div>
-                    <div class="text-xs font-semibold text-zinc-700 mt-3 tracking-widest">SKIPPED</div>
-                </div>
+                <div class="bg-emerald-50 rounded-3xl p-6 text-center border border-emerald-100"><div id="correct-count" class="text-4xl sm:text-5xl font-bold text-emerald-600">24</div><div class="text-xs font-semibold text-emerald-700 mt-3 tracking-widest">CORRECT</div></div>
+                <div class="bg-rose-50 rounded-3xl p-6 text-center border border-rose-100"><div id="incorrect-count" class="text-4xl sm:text-5xl font-bold text-rose-600">3</div><div class="text-xs font-semibold text-rose-700 mt-3 tracking-widest">INCORRECT</div></div>
+                <div class="bg-zinc-50 rounded-3xl p-6 text-center border border-zinc-100"><div id="skipped-count" class="text-4xl sm:text-5xl font-bold text-zinc-600">3</div><div class="text-xs font-semibold text-zinc-700 mt-3 tracking-widest">SKIPPED</div></div>
             </div>
-
             <div id="insights" class="bg-indigo-50 border border-indigo-100 rounded-3xl p-6 sm:p-7 text-sm leading-relaxed text-indigo-950"></div>
-
             <div class="flex flex-col sm:flex-row gap-4 mt-10">
-                <button onclick="restartQuiz()" 
-                        class="flex-1 bg-gray-900 hover:bg-black text-white font-semibold py-5 rounded-3xl transition-all active:scale-[0.97]">
-                    Play Again
-                </button>
-                <button onclick="shareResults()" 
-                        class="flex-1 border-2 border-indigo-200 hover:border-indigo-400 font-semibold py-5 rounded-3xl transition-all">
-                    Share My Report 📤
-                </button>
+                <button onclick="restartQuiz()" class="flex-1 bg-gray-900 hover:bg-black text-white font-semibold py-5 rounded-3xl transition-all active:scale-[0.97]">Play Again</button>
+                <button onclick="shareResults()" class="flex-1 border-2 border-indigo-200 hover:border-indigo-400 font-semibold py-5 rounded-3xl transition-all">Share My Report 📤</button>
             </div>
-
-            <div onclick="showAnswers()" 
-                 class="mt-6 text-center text-indigo-600 hover:text-indigo-700 cursor-pointer font-medium flex items-center justify-center gap-2">
-                Review All Answers ↓
-            </div>
+            <div onclick="showAnswers()" class="mt-6 text-center text-indigo-600 hover:text-indigo-700 cursor-pointer font-medium flex items-center justify-center gap-2">Review All Answers ↓</div>
         </div>
 
-        <!-- Review Modal -->
         <div id="review-modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
             <div class="bg-white rounded-3xl w-full max-w-2xl max-h-[92vh] flex flex-col">
                 <div class="p-6 border-b flex items-center justify-between bg-white sticky top-0 z-10 rounded-t-3xl">
                     <h3 class="font-semibold text-xl">Detailed Review • Unit 5 (30 Questions)</h3>
-                    <button onclick="hideReview()" 
-                            class="w-10 h-10 flex items-center justify-center text-4xl leading-none text-gray-400 hover:text-gray-600 transition-colors">×</button>
+                    <button onclick="hideReview()" class="w-10 h-10 flex items-center justify-center text-4xl leading-none text-gray-400 hover:text-gray-600 transition-colors">×</button>
                 </div>
                 <div id="review-content" class="flex-1 overflow-y-auto p-6 space-y-8"></div>
             </div>
@@ -167,371 +89,266 @@
     </div>
 
     <script>
-        // ====================== 30 MCQs FROM UNIT 5 PDF ======================
-        const questions = [
-            {
-                question: "Software Quality is defined as:",
-                options: ["Only finding bugs", "The degree to which a software product meets specified requirements and customer expectations", "Only speed of the app", "Only cost of development"],
-                answer: 1
-            },
-            {
-                question: "Why is software quality an ethical issue?",
-                options: ["It only affects profit", "Poor quality can cause financial loss, privacy breaches, safety failures and reputational damage", "It has no ethical impact", "Only QA team is responsible"],
-                answer: 1
-            },
-            {
-                question: "Which of the following is a key quality characteristic according to ISO/IEC 25010?",
-                options: ["Only cost", "Security", "Only marketing", "Only sales"],
-                answer: 1
-            },
-            {
-                question: "The Tesla Autopilot recall in 2023 is an example of failure in:",
-                options: ["Marketing", "Culture of quality during design stage", "Only hardware", "Only pricing"],
-                answer: 1
-            },
-            {
-                question: "Shift-Left Testing means:",
-                options: ["Testing only at the end", "Involving quality from day one in every stage of development", "Only QA team testing", "No testing"],
-                answer: 1
-            },
-            {
-                question: "The Test Pyramid recommends most tests at the:",
-                options: ["UI level", "Unit test level (base)", "Only end-to-end level", "Only manual level"],
-                answer: 1
-            },
-            {
-                question: "Cyclomatic Complexity measures:",
-                options: ["Speed of code", "Number of paths through a program (higher = harder to test)", "Only lines of code", "Only comments"],
-                answer: 1
-            },
-            {
-                question: "CI/CD stands for:",
-                options: ["Continuous Integration / Continuous Delivery", "Code Integration / Code Deployment", "Customer Integration / Customer Delivery", "None"],
-                answer: 0
-            },
-            {
-                question: "Accessibility Testing is:",
-                options: ["Optional", "A legal and ethical imperative", "Only for marketing", "Only for mobile"],
-                answer: 1
-            },
-            {
-                question: "Contingent workers include:",
-                options: ["Only full-time employees", "Freelancers, contractors and temporary workers", "Only permanent staff", "Only managers"],
-                answer: 1
-            },
-            {
-                question: "One advantage of using contingent workers is:",
-                options: ["Higher long-term cost", "Flexibility and access to specialized skills", "Always lower quality", "No flexibility"],
-                answer: 1
-            },
-            {
-                question: "A major ethical issue with contingent workers is:",
-                options: ["Too much loyalty", "Loss of institutional knowledge and security risks", "No issues", "Only cost saving"],
-                answer: 1
-            },
-            {
-                question: "H-1B visa is used in the US to:",
-                options: ["Only hire local workers", "Hire foreign workers in specialty occupations (STEM)", "Only for tourism", "Only for students"],
-                answer: 1
-            },
-            {
-                question: "One major criticism of the H-1B program is:",
-                options: ["It increases wages", "Suppression of wages and displacement of domestic workers", "No criticism", "Only benefits Americans"],
-                answer: 1
-            },
-            {
-                question: "Outsourcing means:",
-                options: ["Doing everything in-house", "Hiring an external third-party company for services", "Only hiring full-time staff", "Only local work"],
-                answer: 1
-            },
-            {
-                question: "A key ethical concern in outsourcing is:",
-                options: ["No ethical issues", "Ensuring partners follow ethical labor practices (e.g., avoiding sweatshops)", "Only cost", "Only speed"],
-                answer: 1
-            },
-            {
-                question: "Whistle-blowing is:",
-                options: ["Always illegal", "Disclosing illegal/unethical practices to someone with authority to act", "Only internal gossip", "Only for managers"],
-                answer: 1
-            },
-            {
-                question: "Internal whistle-blowing means reporting to:",
-                options: ["Media only", "Someone inside the organization (manager, ethics hotline)", "Only police", "Only competitors"],
-                answer: 1
-            },
-            {
-                question: "A real ethical dilemma for whistle-blowers is:",
-                options: ["No dilemma", "Loyalty vs. public good and fear of retaliation", "Only money", "Only promotion"],
-                answer: 1
-            },
-            {
-                question: "Green Computing is:",
-                options: ["Only using new hardware", "Environmentally responsible design, use and disposal of IT equipment", "Only saving electricity", "Only recycling paper"],
-                answer: 1
-            },
-            {
-                question: "The 3 R's of Green Computing are:",
-                options: ["Read, Write, Run", "Reduce, Reuse, Recycle", "Run, Repeat, Replace", "None"],
-                answer: 1
-            },
-            {
-                question: "At organizational level, Green Computing includes:",
-                options: ["Only buying expensive hardware", "Energy-efficient data centers and virtualization", "Only printing more", "Ignoring e-waste"],
-                answer: 1
-            },
-            {
-                question: "Device Life Extension (DLE) means:",
-                options: ["Throwing old devices", "Refurbishing and upgrading existing hardware instead of buying new", "Only cloud migration", "Only software updates"],
-                answer: 1
-            },
-            {
-                question: "One advantage of Green Computing is:",
-                options: ["Higher electricity bills", "Cost savings and enhanced brand reputation", "More e-waste", "No environmental benefit"],
-                answer: 1
-            },
-            {
-                question: "HP's Green Computing Initiative includes:",
-                options: ["Only new sales", "Certified refurbished hardware and carbon-neutral services", "Only plastic packaging", "No initiatives"],
-                answer: 1
-            },
-            {
-                question: "Releasing known defective software is considered:",
-                options: ["Good practice", "A breach of professional ethics", "Only a technical issue", "Marketing strategy"],
-                answer: 1
-            },
-            {
-                question: "The Test Pyramid has the most tests at:",
-                options: ["UI level", "Unit test level", "Manual testing only", "No tests"],
-                answer: 1
-            },
-            {
-                question: "Code Coverage measures:",
-                options: ["Only speed", "What percentage of code is executed by tests", "Only cost", "Only lines written"],
-                answer: 1
-            },
-            {
-                question: "H-1B workers are often accused of:",
-                options: ["Increasing wages", "Suppressing wages in the tech sector", "Only helping innovation", "No issues"],
-                answer: 1
-            },
-            {
-                question: "Whistle-blowing is protected when the disclosure is:",
-                options: ["Of public interest and made through proper channels", "Only for personal gain", "Only to media", "Only internal gossip"],
-                answer: 0
-            }
-        ]
-        // =====================================================================
+        const originalQuestions = [
+            { question: "Software Quality is best defined as:", options: ["Only the absence of bugs", "The degree to which a software meets specified requirements and customer expectations", "How fast the software runs", "How cheap it is to develop"], answer: 1 },
+            { question: "Why is poor software quality considered an ethical issue?", options: ["It only affects profit", "It can cause financial loss, privacy breaches, safety failures and reputational damage", "It has no ethical implications", "Only the QA team is responsible"], answer: 1 },
+            { question: "Which of the following is NOT a key quality characteristic in ISO/IEC 25010?", options: ["Functional Suitability", "Performance Efficiency", "Marketing Appeal", "Security"], answer: 2 },
+            { question: "The Tesla Autopilot recall in 2023 highlighted a failure in:", options: ["Marketing strategy", "Culture of quality during the design stage", "Hardware manufacturing only", "Customer support"], answer: 1 },
+            { question: "Shift-Left Testing means:", options: ["Testing only after development is complete", "Bringing quality discussions and testing from the very beginning of development", "Only QA team testing", "Skipping testing altogether"], answer: 1 },
+            { question: "In the Test Pyramid, the largest number of tests should be:", options: ["End-to-End UI tests", "Unit tests at the base", "Manual exploratory tests only", "Integration tests only"], answer: 1 },
+            { question: "Cyclomatic Complexity is a metric that measures:", options: ["Speed of execution", "Number of independent paths through the code", "Lines of code written", "Number of comments"], answer: 1 },
+            { question: "CI/CD primarily helps in:", options: ["Manual testing only", "Automatically building, testing and deploying code frequently", "Reducing team size", "Increasing documentation"], answer: 1 },
+            { question: "Accessibility Testing is:", options: ["Optional for most projects", "A legal and ethical requirement", "Only needed for mobile apps", "Only for senior citizens"], answer: 1 },
+            { question: "Contingent workers are:", options: ["Only permanent full-time employees", "Freelancers, contractors and temporary workers hired for specific projects", "Only top management", "Only interns"], answer: 1 },
+            { question: "One major ethical issue with contingent workers is:", options: ["They are too loyal", "Loss of institutional knowledge and increased security risks", "They always work harder", "They reduce costs with no issues"], answer: 1 },
+            { question: "The H-1B visa program is mainly used to:", options: ["Hire only American workers", "Bring foreign skilled workers in specialty occupations", "Only for tourism", "Only for students"], answer: 1 },
+            { question: "A major criticism of the H-1B program is:", options: ["It raises wages too much", "It can suppress wages and displace domestic workers", "It has no controversies", "It only benefits small companies"], answer: 1 },
+            { question: "Outsourcing in IT typically means:", options: ["Doing all work in-house", "Hiring an external third-party company for services", "Only hiring full-time staff", "Only local work"], answer: 1 },
+            { question: "A key ethical concern in outsourcing supply chains is:", options: ["No ethical issues exist", "Ensuring partners follow fair labor practices (e.g., avoiding sweatshops)", "Only focusing on cost", "Only speed of delivery"], answer: 1 },
+            { question: "Whistle-blowing refers to:", options: ["Always illegal activity", "Disclosing illegal or unethical practices to someone with authority to act", "Only internal gossip", "Only complaining to friends"], answer: 1 },
+            { question: "Internal whistle-blowing means reporting to:", options: ["Media or regulators first", "Someone inside the organization (manager or ethics hotline)", "Only competitors", "Only police"], answer: 1 },
+            { question: "A major dilemma for whistle-blowers is:", options: ["No dilemma at all", "Balancing loyalty to employer vs. public good and fear of retaliation", "Only financial gain", "Only promotion"], answer: 1 },
+            { question: "Green Computing aims to:", options: ["Increase energy consumption", "Minimize environmental impact of IT through reduce-reuse-recycle", "Only buy new hardware", "Ignore e-waste"], answer: 1 },
+            { question: "The 3 R’s of Green Computing are:", options: ["Read, Run, Replace", "Reduce, Reuse, Recycle", "Run, Repeat, Report", "None of these"], answer: 1 },
+            { question: "Virtualization in data centers is mainly used for:", options: ["Increasing power usage", "Reducing number of physical servers and energy consumption", "Only cooling", "Only marketing"], answer: 1 },
+            { question: "Device Life Extension (DLE) means:", options: ["Throwing away old devices quickly", "Refurbishing and upgrading existing hardware", "Only buying new laptops", "Ignoring old devices"], answer: 1 },
+            { question: "One major advantage of Green Computing is:", options: ["Higher electricity bills", "Cost savings and better brand reputation", "More e-waste", "No environmental benefit"], answer: 1 },
+            { question: "HP’s Green Computing initiative includes:", options: ["Only selling new devices", "Certified refurbished hardware and carbon-neutral services", "Only plastic packaging", "No sustainability efforts"], answer: 1 },
+            { question: "Releasing software with known serious defects is:", options: ["Good business practice", "A serious breach of professional ethics", "Only a technical issue", "Marketing strategy"], answer: 1 },
+            { question: "In the Test Pyramid, the fewest tests are at the:", options: ["Unit level", "End-to-End UI level", "Integration level", "Manual level"], answer: 1 },
+            { question: "Code Coverage percentage tells us:", options: ["How fast the code runs", "What portion of the code is executed by tests", "How many developers wrote the code", "Only cost of testing"], answer: 1 },
+            { question: "The main ethical controversy with H-1B workers is:", options: ["They are paid too much", "They are often used to suppress wages and displace American workers", "They have no impact", "They only help innovation"], answer: 1 },
+            { question: "A protected whistle-blowing disclosure must be:", options: ["Only for personal gain", "Of public interest and made through proper channels", "Always to the media first", "Only internal gossip"], answer: 1 },
+            { question: "The proposed Copyright Bill 2024 in Nepal aims to create:", options: ["No enforcement body", "IP Police for better enforcement against piracy", "Only new taxes", "Nothing new"], answer: 1 }
+        ];
 
-        let currentQuestionIndex = 0
-        let selectedAnswers = new Array(questions.length).fill(null)
+        let questions = [];
+        let currentQuestionIndex = 0;
+        let selectedAnswers = [];
+
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function prepareShuffledQuestions() {
+            questions = originalQuestions.map(q => {
+                const shuffledOptions = shuffleArray(q.options);
+                const originalCorrect = q.options[q.answer];
+                const newAnswerIndex = shuffledOptions.indexOf(originalCorrect);
+                return { question: q.question, options: shuffledOptions, answer: newAnswerIndex };
+            });
+            selectedAnswers = new Array(questions.length).fill(null);
+        }
 
         function renderQuestion() {
-            const q = questions[currentQuestionIndex]
-            document.getElementById('progress').style.width = `${((currentQuestionIndex + 1) / questions.length) * 100}%`
-            document.getElementById('question-counter').textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`
-            document.getElementById('question-text').textContent = q.question
-            renderOptions()
-            updateNavigationButtons()
+            const q = questions[currentQuestionIndex];
+            document.getElementById('progress').style.width = `${((currentQuestionIndex + 1) / questions.length) * 100}%`;
+            document.getElementById('question-counter').textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
+            document.getElementById('question-text').textContent = q.question;
+            renderOptions();
+            updateNavigationButtons();
         }
 
         function renderOptions() {
-            const container = document.getElementById('options')
-            container.innerHTML = ''
-            const q = questions[currentQuestionIndex]
-            const selected = selectedAnswers[currentQuestionIndex]
-            const isLocked = selected !== null
-            const correctIdx = q.answer
+            const container = document.getElementById('options');
+            container.innerHTML = '';
+            const q = questions[currentQuestionIndex];
+            const selected = selectedAnswers[currentQuestionIndex];
+            const isLocked = selected !== null;
+            const correctIdx = q.answer;
 
             q.options.forEach((option, idx) => {
-                const btn = document.createElement('button')
-                let btnClass = `option w-full text-left px-6 py-5 sm:py-6 rounded-3xl border-2 text-base sm:text-lg font-medium flex items-center gap-5 group`
-                let extraHTML = ''
+                const btn = document.createElement('button');
+                let btnClass = `option w-full text-left px-6 py-5 sm:py-6 rounded-3xl border-2 text-base sm:text-lg font-medium flex items-center gap-5 group`;
+                let extraHTML = '';
 
                 if (isLocked) {
-                    btn.disabled = true
+                    btn.disabled = true;
                     if (idx === correctIdx) {
-                        btnClass += ' border-emerald-400 bg-emerald-50 text-emerald-900'
-                        extraHTML = `<span class="ml-auto text-3xl text-emerald-500">✓</span>`
+                        btnClass += ' border-emerald-400 bg-emerald-50 text-emerald-900';
+                        extraHTML = `<span class="ml-auto text-3xl text-emerald-500">✓</span>`;
                     } else if (idx === selected) {
-                        btnClass += ' border-rose-400 bg-rose-50 text-rose-900'
-                        extraHTML = `<span class="ml-auto text-3xl text-rose-500">✕</span>`
+                        btnClass += ' border-rose-400 bg-rose-50 text-rose-900';
+                        extraHTML = `<span class="ml-auto text-3xl text-rose-500">✕</span>`;
                     } else {
-                        btnClass += ' border-gray-200 bg-white/70 opacity-80'
+                        btnClass += ' border-gray-200 bg-white/70 opacity-80';
                     }
                 } else {
-                    btnClass += ' border-gray-200 hover:border-indigo-300 hover:bg-indigo-50'
-                    if (idx === selected) btnClass += ' border-indigo-400 bg-indigo-50'
+                    btnClass += ' border-gray-200 hover:border-indigo-300 hover:bg-indigo-50';
+                    if (idx === selected) btnClass += ' border-indigo-400 bg-indigo-50';
                 }
 
-                btn.className = btnClass
+                btn.className = btnClass;
                 btn.innerHTML = `
                     <span class="w-9 h-9 flex-shrink-0 rounded-2xl border flex items-center justify-center text-base font-bold">${String.fromCharCode(65 + idx)}</span>
                     <span class="flex-1">${option}</span>
                     ${extraHTML}
-                `
-                if (!isLocked) btn.onclick = () => selectOption(idx)
-                container.appendChild(btn)
-            })
+                `;
+                if (!isLocked) btn.onclick = () => selectOption(idx);
+                container.appendChild(btn);
+            });
 
-            const statusEl = document.getElementById('status')
-            statusEl.textContent = isLocked ? 'Answered' : 'Unanswered'
-            statusEl.parentElement.classList.toggle('bg-emerald-100', isLocked)
-            statusEl.parentElement.classList.toggle('text-emerald-700', isLocked)
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = isLocked ? 'Answered' : 'Unanswered';
+            statusEl.parentElement.classList.toggle('bg-emerald-100', isLocked);
+            statusEl.parentElement.classList.toggle('text-emerald-700', isLocked);
         }
 
         function selectOption(index) {
-            if (selectedAnswers[currentQuestionIndex] !== null) return
-            selectedAnswers[currentQuestionIndex] = index
-            renderOptions()
-            updateNavigationButtons()
+            if (selectedAnswers[currentQuestionIndex] !== null) return;
+            selectedAnswers[currentQuestionIndex] = index;
+            renderOptions();
+            updateNavigationButtons();
         }
 
         function updateNavigationButtons() {
-            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0
-            const nextBtn = document.getElementById('next-btn')
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            const nextBtn = document.getElementById('next-btn');
             nextBtn.innerHTML = currentQuestionIndex === questions.length - 1 
                 ? `Finish Quiz <span class="text-2xl">🏁</span>` 
-                : `Next Question <span class="text-2xl">→</span>`
+                : `Next Question <span class="text-2xl">→</span>`;
         }
 
         function nextQuestion() {
             if (currentQuestionIndex < questions.length - 1) {
-                currentQuestionIndex++
-                renderQuestion()
+                currentQuestionIndex++;
+                renderQuestion();
             } else {
-                showResults()
+                showResults();
             }
         }
 
         function previousQuestion() {
             if (currentQuestionIndex > 0) {
-                currentQuestionIndex--
-                renderQuestion()
+                currentQuestionIndex--;
+                renderQuestion();
             }
         }
 
         function calculateResults() {
-            let correct = 0, incorrect = 0, skipped = 0
+            let correct = 0, incorrect = 0, skipped = 0;
             selectedAnswers.forEach((selected, i) => {
-                if (selected === null) skipped++
-                else if (selected === questions[i].answer) correct++
-                else incorrect++
-            })
-            return { correct, incorrect, skipped, total: questions.length }
+                if (selected === null) skipped++;
+                else if (selected === questions[i].answer) correct++;
+                else incorrect++;
+            });
+            return { correct, incorrect, skipped, total: questions.length };
         }
 
         function showResults() {
-            const { correct, incorrect, skipped, total } = calculateResults()
-            const percentage = Math.round((correct / total) * 100)
-            const attempted = correct + incorrect
-            const accuracyAttempted = attempted > 0 ? Math.round((correct / attempted) * 100) : 0
+            const { correct, incorrect, skipped, total } = calculateResults();
+            const percentage = Math.round((correct / total) * 100);
+            const attempted = correct + incorrect;
+            const accuracyAttempted = attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
 
-            document.getElementById('quiz-card').classList.add('hidden')
-            document.getElementById('results-screen').classList.remove('hidden')
+            document.getElementById('quiz-card').classList.add('hidden');
+            document.getElementById('results-screen').classList.remove('hidden');
 
-            document.getElementById('score').textContent = `${correct}/${total}`
-            document.getElementById('percentage').textContent = `${percentage}%`
-            document.getElementById('correct-count').textContent = correct
-            document.getElementById('incorrect-count').textContent = incorrect
-            document.getElementById('skipped-count').textContent = skipped
+            document.getElementById('score').textContent = `${correct}/${total}`;
+            document.getElementById('percentage').textContent = `${percentage}%`;
+            document.getElementById('correct-count').textContent = correct;
+            document.getElementById('incorrect-count').textContent = incorrect;
+            document.getElementById('skipped-count').textContent = skipped;
 
-            const trophyEl = document.getElementById('trophy')
-            trophyEl.textContent = percentage >= 85 ? '🏆' : percentage >= 65 ? '🔥' : percentage >= 40 ? '👍' : '📚'
+            const trophyEl = document.getElementById('trophy');
+            trophyEl.textContent = percentage >= 85 ? '🏆' : percentage >= 65 ? '🔥' : percentage >= 40 ? '👍' : '📚';
 
-            let insightsHTML = `
-                You scored <strong>${correct}</strong> out of <strong>${total}</strong> (${percentage}% overall).<br><br>
-                ${attempted > 0 ? `Accuracy on attempted questions: <strong>${accuracyAttempted}%</strong>.<br><br>` : ''}
-                ${skipped > 0 
-                    ? `💡 You skipped <strong>${skipped}</strong> questions. Attempting them could have boosted your score significantly!` 
-                    : `🌟 Outstanding! You attempted every question.`}
-            `
-            document.getElementById('insights').innerHTML = insightsHTML
+            let insightsHTML = `You scored <strong>${correct}</strong> out of <strong>${total}</strong> (${percentage}% overall).<br><br>${attempted > 0 ? `Accuracy on attempted questions: <strong>${accuracyAttempted}%</strong>.<br><br>` : ''}${skipped > 0 ? `💡 You skipped <strong>${skipped}</strong> questions. Attempting them could have boosted your score significantly!` : `🌟 Outstanding! You attempted every question.`}`;
+            document.getElementById('insights').innerHTML = insightsHTML;
         }
 
         function restartQuiz() {
-            currentQuestionIndex = 0
-            selectedAnswers = new Array(questions.length).fill(null)
-            document.getElementById('quiz-card').classList.remove('hidden')
-            document.getElementById('results-screen').classList.add('hidden')
-            document.getElementById('review-modal').classList.add('hidden')
-            renderQuestion()
+            prepareShuffledQuestions();
+            currentQuestionIndex = 0;
+            document.getElementById('quiz-card').classList.remove('hidden');
+            document.getElementById('results-screen').classList.add('hidden');
+            document.getElementById('review-modal').classList.add('hidden');
+            renderQuestion();
         }
 
         function shareResults() {
-            const { correct, incorrect, skipped, total } = calculateResults()
-            const percentage = Math.round((correct / total) * 100)
-            const text = `⚖️ Quizzy Pro Result (Unit 5 Ethical Decisions in Software Development)\nI scored ${correct}/${total} (${percentage}%) — ${correct} correct, ${incorrect} wrong, ${skipped} skipped!\n\nBeat my score? Download the HTML file and play instantly!`
+            const { correct, incorrect, skipped, total } = calculateResults();
+            const percentage = Math.round((correct / total) * 100);
+            const text = `⚖️ Quizzy Pro Result (Unit 5 Ethical Decisions in Software Development)\nI scored ${correct}/${total} (${percentage}%) — ${correct} correct, ${incorrect} wrong, ${skipped} skipped!\n\nBeat my score? Download the HTML file and play instantly!`;
             navigator.clipboard.writeText(text).then(() => {
-                const btn = event.currentTarget
-                const orig = btn.textContent
-                btn.textContent = '✅ Report Copied!'
-                setTimeout(() => btn.textContent = orig, 2000)
-            })
+                const btn = event.currentTarget;
+                const orig = btn.textContent;
+                btn.textContent = '✅ Report Copied!';
+                setTimeout(() => btn.textContent = orig, 2000);
+            });
         }
 
         function showAnswers() {
-            const modal = document.getElementById('review-modal')
-            const content = document.getElementById('review-content')
-            content.innerHTML = ''
-            
+            const modal = document.getElementById('review-modal');
+            const content = document.getElementById('review-content');
+            content.innerHTML = '';
             questions.forEach((q, i) => {
-                const selected = selectedAnswers[i]
-                const isCorrect = selected === q.answer
-                let statusHTML = ''
+                const selected = selectedAnswers[i];
+                const isCorrect = selected === q.answer;
+                let statusHTML = '';
                 if (selected === null) {
-                    statusHTML = `<div class="flex items-center gap-3 text-amber-600"><span class="text-3xl">⏭️</span><span class="font-semibold">Skipped</span></div>`
+                    statusHTML = `<div class="flex items-center gap-3 text-amber-600"><span class="text-3xl">⏭️</span><span class="font-semibold">Skipped</span></div>`;
                 } else if (isCorrect) {
-                    statusHTML = `<div class="flex items-center gap-3 text-emerald-600"><span class="text-3xl">✅</span><span class="font-semibold">Correct</span></div>`
+                    statusHTML = `<div class="flex items-center gap-3 text-emerald-600"><span class="text-3xl">✅</span><span class="font-semibold">Correct</span></div>`;
                 } else {
-                    statusHTML = `<div class="flex items-center gap-3 text-rose-600"><span class="text-3xl">❌</span><span class="font-semibold">Incorrect</span></div>`
+                    statusHTML = `<div class="flex items-center gap-3 text-rose-600"><span class="text-3xl">❌</span><span class="font-semibold">Incorrect</span></div>`;
                 }
-                
-                const div = document.createElement('div')
-                div.className = `border rounded-3xl p-7 ${selected === null ? 'border-amber-200 bg-amber-50' : isCorrect ? 'border-emerald-200 bg-emerald-50' : 'border-rose-200 bg-rose-50'}`
-                div.innerHTML = `
-                    ${statusHTML}
-                    <p class="font-medium mt-5 text-lg leading-tight">${q.question}</p>
-                    <div class="grid grid-cols-1 gap-3 mt-7">
-                        ${q.options.map((opt, idx) => {
-                            let optClass = 'px-6 py-4 rounded-2xl border text-base flex justify-between items-center'
-                            if (idx === q.answer) optClass += ' border-emerald-400 bg-emerald-100 text-emerald-800'
-                            else if (selected !== null && idx === selected) optClass += ' border-rose-400 bg-rose-100 text-rose-800 line-through'
-                            else optClass += ' border-gray-200 bg-white'
-                            return `<div class="${optClass}">
-                                        <span>${String.fromCharCode(65 + idx)}. ${opt}</span>
-                                        ${idx === q.answer ? '<span class="text-emerald-600 text-xl">✓</span>' : ''}
-                                    </div>`
-                        }).join('')}
-                    </div>
-                `
-                content.appendChild(div)
-            })
-            modal.classList.remove('hidden')
+                const div = document.createElement('div');
+                div.className = `border rounded-3xl p-7 ${selected === null ? 'border-amber-200 bg-amber-50' : isCorrect ? 'border-emerald-200 bg-emerald-50' : 'border-rose-200 bg-rose-50'}`;
+                div.innerHTML = `${statusHTML}<p class="font-medium mt-5 text-lg leading-tight">${q.question}</p><div class="grid grid-cols-1 gap-3 mt-7">${q.options.map((opt, idx) => { let optClass = 'px-6 py-4 rounded-2xl border text-base flex justify-between items-center'; if (idx === q.answer) optClass += ' border-emerald-400 bg-emerald-100 text-emerald-800'; else if (selected !== null && idx === selected) optClass += ' border-rose-400 bg-rose-100 text-rose-800 line-through'; else optClass += ' border-gray-200 bg-white'; return `<div class="${optClass}"><span>${String.fromCharCode(65 + idx)}. ${opt}</span>${idx === q.answer ? '<span class="text-emerald-600 text-xl">✓</span>' : ''}</div>`; }).join('')}</div>`;
+                content.appendChild(div);
+            });
+            modal.classList.remove('hidden');
         }
 
         function hideReview() {
-            document.getElementById('review-modal').classList.add('hidden')
+            document.getElementById('review-modal').classList.add('hidden');
         }
 
         function handleKeyboard(e) {
-            if (document.getElementById('quiz-card').classList.contains('hidden')) return
-            if (e.key === 'ArrowRight') nextQuestion()
-            if (e.key === 'ArrowLeft') previousQuestion()
+            if (document.getElementById('quiz-card').classList.contains('hidden')) return;
+            if (e.key === 'ArrowRight') nextQuestion();
+            if (e.key === 'ArrowLeft') previousQuestion();
             if (e.key >= '1' && e.key <= '4') {
-                const idx = parseInt(e.key) - 1
+                const idx = parseInt(e.key) - 1;
                 if (idx < questions[currentQuestionIndex].options.length && selectedAnswers[currentQuestionIndex] === null) {
-                    selectOption(idx)
+                    selectOption(idx);
                 }
             }
         }
 
-        function startQuiz() {
-            renderQuestion()
-            document.addEventListener('keydown', handleKeyboard)
-            console.log('%c✅ Quizzy Pro Unit 5 (30 MCQs) loaded successfully! Fully responsive on mobile, tablet & PC.', 'color:#6366f1; font-weight:700')
+        function prepareShuffledQuestions() {
+            questions = originalQuestions.map(q => {
+                const shuffledOptions = shuffleArray(q.options);
+                const originalCorrect = q.options[q.answer];
+                const newAnswerIndex = shuffledOptions.indexOf(originalCorrect);
+                return { question: q.question, options: shuffledOptions, answer: newAnswerIndex };
+            });
+            selectedAnswers = new Array(questions.length).fill(null);
         }
 
-        window.onload = startQuiz
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function startQuiz() {
+            prepareShuffledQuestions();
+            currentQuestionIndex = 0;
+            renderQuestion();
+            document.addEventListener('keydown', handleKeyboard);
+        }
+
+        window.onload = startQuiz;
     </script>
 </body>
 </html>
